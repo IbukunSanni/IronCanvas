@@ -2,6 +2,8 @@
 
 > A web app where artists upload drawings from practice sessions, receive structured critiques, and track progress with simple metrics.
 
+*Evolution from DrawaboxCompanion to a full-featured practice tracking and feedback platform.*
+
 ## Core Product Statement
 
 **Practice → Upload → Critique → Track.**
@@ -149,8 +151,8 @@ No feed, no ranking, no AI, no notifications yet.
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd iron-canvas
+git clone https://github.com/IbukunSanni/IronCanvas.git
+cd IronCanvas
 
 # Install dependencies
 npm install
