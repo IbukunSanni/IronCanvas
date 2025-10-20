@@ -5,6 +5,50 @@ Building a full-stack platform where artists upload practice pieces, receive str
 
 **Core Loop**: Practice → Upload → Critique → Track
 
+## Technical Roadmap & Architecture
+
+### Development Philosophy: Build → Replace → Scale
+- **Phase 1**: Ship fast with Supabase - learn the full product flow
+- **Phase 2**: Replace components with custom services - learn backend architecture  
+- **Phase 3**: Scale with industry tools - learn production operations
+- Never learn tech abstractly—always integrate into this running system
+- Keep database schema stable across all phases
+
+### Phase 1 – MVP Technical Stack (Ship Now)
+
+| Layer                             | Tool                                                 | Purpose                                    | Reason                                           |
+| --------------------------------- | ---------------------------------------------------- | ------------------------------------------ | ------------------------------------------------ |
+| **Frontend**                      | **Next.js (App Router) + TypeScript + Tailwind CSS** | UI, routing, forms, uploads, dashboard     | Fast build, strong typing, easy deploy to Vercel |
+| **State Mgmt**                    | Zustand / SWR                                        | Local & remote caching                     | Lightweight, no Redux complexity                 |
+| **Backend / DB / Auth / Storage** | **Supabase**                                         | Postgres + Auth + Storage + Edge Functions | Single platform → no servers to run              |
+| **Deployment**                    | Vercel (frontend) + Supabase (back + data)           | CI/CD & hosting                            | Lowest friction                                  |
+| **Analytics**                     | Supabase SQL views                                   | Progress, counts                           | Simple aggregates                                |
+| **Business Logic**                | RLS + Edge Functions                                 | Validation & metrics                       | Secure, minimal code                             |
+
+✅ **Focus**: ship the **Practice → Upload → Critique → Track** loop  
+🕐 **Duration**: ~10 days  
+🧠 **Skills gained**: product flow, DB schema, auth, cloud storage, deployment
+
+#### Database Schema
+- `users` (id, username, email, created_at)
+- `submissions` (id, user_id, image_url, exercise_type, created_at)
+- `critiques` (id, submission_id, reviewer_id, what_works, what_to_improve, next_focus, created_at)
+- `props` (id, submission_id, giver_id, created_at)
+
+### MVP Definition of Done
+- ✅ User can sign up and log in
+- ✅ Upload one artwork with a tag
+- ✅ Other users can leave a structured critique (3 questions)
+- ✅ Critiqued artist sees total props and critique count
+- ✅ Dashboard displays total uploads, critiques given/received, current streak
+- ✅ Deployed and stable at one public URL
+
+### Performance Targets (Phase 1)
+- p95 upload latency ≤ 3s for <5MB image
+- Critique submission ≤ 1s write
+- Dashboard loads ≤ 1s from cache
+- Cost ≤ $20/month (Vercel + Supabase tier)
+
 ---
 
 ## Phase 1 - MVP Implementation (Days 1-10)
@@ -200,6 +244,23 @@ Building a full-stack platform where artists upload practice pieces, receive str
 
 **Goal**: Add real backend compute and structured APIs while keeping Supabase as data/auth layer
 
+### Phase 2 Technical Stack Evolution
+
+| Layer          | Upgrade                                                                | Skill Learned                            |
+| -------------- | ---------------------------------------------------------------------- | ---------------------------------------- |
+| **API**        | Add **FastAPI (or Express + TypeScript)** service in front of Supabase | Routing, validation, middleware, testing |
+| **Queries**    | Try **GraphQL (pg_graphql or Apollo)** for nested reads                | Schema design, resolvers, caching        |
+| **Jobs**       | Add **Supabase Edge Functions or AWS Lambda** for streak + AI prep     | Async tasks, permissions                 |
+| **Infra**      | Dockerize backend + CI/CD pipeline                                     | DevOps, container basics                 |
+| **Monitoring** | Add **PostHog or Grafana**                                             | Metrics & logging discipline             |
+
+**Outcome**: Move from *no-code backend* → *explicit service logic* while keeping product alive
+
+### Phase 2 Performance Targets
+- API response time ≤ 500ms p95
+- Cost ≤ $50/month with additional services
+- 99.9% uptime
+
 ### Backend Service Layer
 - [ ] **FastAPI Service Setup**
   - [ ] Create FastAPI application structure
@@ -251,6 +312,25 @@ Building a full-stack platform where artists upload practice pieces, receive str
 ## Phase 3 - Integration & Scale (Industry Skill)
 
 **Goal**: Production-grade system with industry-standard architecture
+
+### Phase 3 Technical Stack Evolution
+
+| Domain                | Tool / Concept                       | Focus                    |
+| --------------------- | ------------------------------------ | ------------------------ |
+| **Cloud integration** | AWS S3 + RDS + Lambda + SQS          | IAM, queues, reliability |
+| **Performance**       | Caching layer (Redis / CloudFront)   | Scaling read loads       |
+| **Testing**           | Pytest / Vitest / Cypress            | Unit + E2E discipline    |
+| **AI Extension**      | Hugging Face or OpenAI API           | Auto-critique generation |
+| **Realtime**          | Supabase Realtime / WebSocket Server | Live feedback            |
+| **Observability**     | CloudWatch / Grafana                 | Ops readiness            |
+
+**Outcome**: Production-grade system and resume-ready case study
+
+### Phase 3 Performance Targets
+- Support 1000+ concurrent users
+- Cost optimization with caching
+- Full observability stack
+- 99.99% uptime
 
 ### Cloud Integration
 - [ ] **AWS Services Migration**
