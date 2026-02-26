@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 
-export default function DashboardPage() {
+export default function ProfilePage() {
   const router = useRouter();
   const { user, loading, signOut } = useAuth();
 
@@ -28,11 +28,11 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 px-6 py-12">
-      <div className="mx-auto max-w-3xl space-y-6">
+      <div className="mx-auto max-w-2xl space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold">Dashboard</h1>
-            <p className="text-sm text-zinc-500">Signed in as {user.email}</p>
+            <h1 className="text-2xl font-semibold">Profile</h1>
+            <p className="text-sm text-zinc-500">Manage your account settings.</p>
           </div>
           <button
             onClick={() => signOut()}
@@ -43,13 +43,14 @@ export default function DashboardPage() {
         </div>
 
         <div className="rounded-lg border border-zinc-200 bg-white p-6 text-sm text-zinc-600">
-          <p className="mb-4">Metrics and submissions will live here next.</p>
-          <a
-            href="/submit"
-            className="inline-flex rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white"
-          >
-            Upload new artwork
-          </a>
+          <div className="space-y-2">
+            <p>
+              <span className="font-semibold text-zinc-900">Email:</span> {user.email}
+            </p>
+            <p>
+              <span className="font-semibold text-zinc-900">User ID:</span> {user.id}
+            </p>
+          </div>
         </div>
       </div>
     </div>

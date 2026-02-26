@@ -119,15 +119,15 @@ Move to Phase 2 only when:
   - [x] Create auth context and hooks
   - [x] Implement registration form (username + email)
   - [x] Implement login/logout functionality
-  - [ ] Set up protected routes middleware
-  - [ ] Create basic user profile page
+  - [x] Set up protected routes middleware
+  - [x] Create basic user profile page
   - [ ] Test auth flow end-to-end
 
 - [ ] **Image Upload (Supabase Storage)**
   - [ ] Create Supabase storage bucket for artwork
   - [ ] Configure storage policies and permissions
-  - [ ] Create image upload utility functions
-  - [ ] Implement image upload with progress tracking
+  - [x] Create image upload utility functions
+  - [x] Implement image upload form (basic)
   - [ ] Add image optimization and validation
   - [ ] Test upload functionality
 
@@ -135,11 +135,11 @@ Move to Phase 2 only when:
 
 ## Day 3-4: Core Upload & Dashboard
 - [ ] **Submission Form**
-  - [ ] Create artwork upload form component
-  - [ ] Add exercise type selection (Boxes, Ellipses, Figures)
+  - [x] Create artwork upload form component
+  - [x] Add exercise type selection (Boxes, Ellipses, Figures)
   - [ ] Implement image preview functionality
-  - [ ] Add form validation
-  - [ ] Connect to backend API
+  - [x] Add form validation
+  - [x] Connect to backend API
   - [ ] Handle upload progress feedback
 
 - [ ] **Dashboard View**
