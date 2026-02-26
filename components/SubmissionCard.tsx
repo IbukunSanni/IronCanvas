@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { Submission } from '@/types/submission';
 
 function formatDate(value: string) {
@@ -11,7 +12,10 @@ function formatDate(value: string) {
 
 export default function SubmissionCard({ submission }: { submission: Submission }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
+    <Link
+      href={`/submissions/${submission.id}`}
+      className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm transition hover:border-zinc-300"
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={submission.image_url}
@@ -28,6 +32,6 @@ export default function SubmissionCard({ submission }: { submission: Submission 
           </p>
         ) : null}
       </div>
-    </div>
+    </Link>
   );
 }

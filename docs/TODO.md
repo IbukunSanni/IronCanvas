@@ -126,8 +126,8 @@ Move to Phase 2 only when:
   - [ ] Test auth flow end-to-end
 
 - [ ] **Image Upload (Supabase Storage)**
-  - [ ] Create Supabase storage bucket for artwork
-  - [ ] Configure storage policies and permissions
+  - [x] Create Supabase storage bucket for artwork
+  - [x] Configure storage policies and permissions
   - [x] Create image upload utility functions
   - [x] Implement image upload form (basic)
   - [x] Add file validation (size/type)
@@ -149,14 +149,14 @@ Move to Phase 2 only when:
   - [x] Create user dashboard layout
   - [x] Display user's uploaded submissions
   - [x] Show submission thumbnails with metadata
-  - [ ] Add submission filtering by exercise type
+  - [x] Add submission filtering by exercise type
   - [x] Implement basic responsive design
 
 - [ ] **Submission Detail Page**
-  - [ ] Create individual submission view
-  - [ ] Display full-size image
-  - [ ] Show submission metadata (date, exercise type)
-  - [ ] Add navigation between submissions
+  - [x] Create individual submission view
+  - [x] Display full-size image
+  - [x] Show submission metadata (date, exercise type)
+  - [x] Add navigation between submissions
 
 ---
 

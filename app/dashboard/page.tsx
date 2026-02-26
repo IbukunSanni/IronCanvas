@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 import { useAuth } from '@/components/AuthProvider';
@@ -68,6 +68,19 @@ export default function DashboardPage() {
     user ? fetchDashboard(user.id) : Promise.resolve(null),
   );
 
+  const [exerciseFilter, setExerciseFilter] = useState('All');
+
+  const exerciseOptions = useMemo(() => {
+    const types = new Set(data?.submissions?.map((submission) => submission.exercise_type) ?? []);
+    return ['All', ...Array.from(types)];
+  }, [data]);
+
+  const filteredSubmissions = useMemo(() => {
+    if (!data?.submissions) return [];
+    if (exerciseFilter === 'All') return data.submissions;
+    return data.submissions.filter((submission) => submission.exercise_type === exerciseFilter);
+  }, [data, exerciseFilter]);
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-zinc-50">
@@ -124,7 +137,41 @@ export default function DashboardPage() {
       </div>
 
       {data?.submissions && data.submissions.length > 0 ? (
-        <SubmissionGrid submissions={data.submissions} />
+        <div className="space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-sm font-semibold text-zinc-900">Recent submissions</p>
+            <label className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+              Filter
+              <select
+                value={exerciseFilter}
+                onChange={(event) => setExerciseFilter(event.target.value)}
+                className="ml-2 rounded-md border border-zinc-200 px-2 py-1 text-xs text-zinc-700"
+              >
+                {exerciseOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          {filteredSubmissions.length ? (
+            <SubmissionGrid submissions={filteredSubmissions} />
+          ) : (
+            <EmptyState
+              title="No submissions for this filter"
+              description="Try a different exercise type or upload a new piece."
+              action={
+                <a
+                  href="/submit"
+                  className="inline-flex rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white"
+                >
+                  Upload new artwork
+                </a>
+              }
+            />
+          )}
+        </div>
       ) : (
         <EmptyState
           title="No submissions yet"
