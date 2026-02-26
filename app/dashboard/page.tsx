@@ -189,3 +189,5 @@ export default function DashboardPage() {
     </DashboardShell>
   );
 }
+
+// Note: secrets (e.g., Mailtrap token) must be in env vars; source control/build artifacts can expose them.

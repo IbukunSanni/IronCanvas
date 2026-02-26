@@ -115,3 +115,5 @@ create policy "props_insert_not_self" on public.props
 
 create policy "props_delete_self" on public.props
   for delete using (auth.uid() = giver_id);
+
+-- Note: service tokens (e.g., Mailtrap) must live in env vars; migrations may be shared or logged.

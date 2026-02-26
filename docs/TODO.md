@@ -248,6 +248,9 @@ Move to Phase 2 only when:
   - [ ] Configure domain and SSL
   - [ ] Test production deployment thoroughly
 
+- [ ] **Email (Mailtrap)**
+  - [ ] Set SMTP_* variables in .env.local
+
 - [ ] **Performance Testing**
   - [ ] Test p95 upload latency (target: ≤3s for <5MB)
   - [ ] Test critique submission speed (target: ≤1s)
@@ -266,6 +269,17 @@ Move to Phase 2 only when:
   - [ ] User acceptance testing
   - [ ] Fix any critical bugs
   - [ ] Prepare for launch
+
+---
+
+## Testing Checklist (MVP)
+- [ ] Auth: sign up, login, logout, protected routes redirect
+- [ ] Upload: valid image uploads, invalid file blocked, metadata saved
+- [ ] Dashboard: uploads/critique counts match DB, filters work
+- [ ] Critiques: create/read/delete own critique, cannot edit others
+- [ ] RLS: cannot insert/update/delete as another user (submissions/critiques/props)
+- [ ] Storage: uploaded image is viewable and persists after refresh
+- [ ] Empty states: no submissions, filtered empty, error state
 
 ---
 

@@ -22,6 +22,15 @@ Iron Canvas helps artists upload practice work, receive focused critiques, and t
 * [docs/TODO.md](docs/TODO.md)
 * [docs/KNOWLEDGEBASE.md](docs/KNOWLEDGEBASE.md)
 
+## Environment Variables
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SMTP_HOST` (Mailtrap)
+- `SMTP_PORT` (Mailtrap)
+- `SMTP_USERNAME` (Mailtrap)
+- `SMTP_PASSWORD` (Mailtrap)
+
 ## Getting Started (Developers)
 
 Clone, install, and run:
@@ -33,3 +42,10 @@ npm install
 cp .env.example .env.local
 npm run dev
 ```
+
+## Environment Variables
+- `MAILTRAP_TOKEN` (set in `.env.local`, never commit; secrets can leak via git/builds)
+- `SMTP_HOST` (e.g., `sandbox.smtp.mailtrap.io`)
+- `SMTP_PORT` (e.g., `587`)
+- `SMTP_USERNAME` (set in `.env.local`)
+- `SMTP_PASSWORD` (set in `.env.local`)
