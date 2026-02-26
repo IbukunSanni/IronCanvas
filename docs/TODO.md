@@ -5,49 +5,85 @@ Building a full-stack platform where artists upload practice pieces, receive str
 
 **Core Loop**: Practice → Upload → Critique → Track
 
-## Technical Roadmap & Architecture
+> 📖 **See [Knowledge Base](knowledgebase/KNOWLEDGEBASE.md)** for complete project philosophy, execution system, and learning roadmap.
 
-### Development Philosophy: Build → Replace → Scale
-- **Phase 1**: Ship fast with Supabase - learn the full product flow
-- **Phase 2**: Replace components with custom services - learn backend architecture  
-- **Phase 3**: Scale with industry tools - learn production operations
-- Never learn tech abstractly—always integrate into this running system
-- Keep database schema stable across all phases
+## Technical Roadmap & Architecture (Locked)
 
-### Phase 1 – MVP Technical Stack (Ship Now)
+Each phase has:
 
-| Layer                             | Tool                                                 | Purpose                                    | Reason                                           |
-| --------------------------------- | ---------------------------------------------------- | ------------------------------------------ | ------------------------------------------------ |
-| **Frontend**                      | **Next.js (App Router) + TypeScript + Tailwind CSS** | UI, routing, forms, uploads, dashboard     | Fast build, strong typing, easy deploy to Vercel |
-| **State Mgmt**                    | Zustand / SWR                                        | Local & remote caching                     | Lightweight, no Redux complexity                 |
-| **Backend / DB / Auth / Storage** | **Supabase**                                         | Postgres + Auth + Storage + Edge Functions | Single platform → no servers to run              |
-| **Deployment**                    | Vercel (frontend) + Supabase (back + data)           | CI/CD & hosting                            | Lowest friction                                  |
-| **Analytics**                     | Supabase SQL views                                   | Progress, counts                           | Simple aggregates                                |
-| **Business Logic**                | RLS + Edge Functions                                 | Validation & metrics                       | Secure, minimal code                             |
+* 🎯 Objective
+* 🧱 Tech Stack
+* 📦 Deliverable
+* 🔄 Upgrade Trigger
 
-✅ **Focus**: ship the **Practice → Upload → Critique → Track** loop  
-🕐 **Duration**: ~10 days  
-🧠 **Skills gained**: product flow, DB schema, auth, cloud storage, deployment
+---
 
-#### Database Schema
-- `users` (id, username, email, created_at)
-- `submissions` (id, user_id, image_url, exercise_type, created_at)
-- `critiques` (id, submission_id, reviewer_id, what_works, what_to_improve, next_focus, created_at)
-- `props` (id, submission_id, giver_id, created_at)
+## Phase 1 — Core Critique Engine (MVP)
+
+### 🎯 Objective
+
+Ship the working loop:
+
+Practice → Upload → Critique → Track
+
+### 🧱 Tech Stack
+
+**Frontend**
+* Next.js (App Router)
+* TypeScript
+* Tailwind CSS
+* SWR (data fetching)
+
+**Backend / Data**
+* Supabase (Auth, Postgres, Storage, RLS)
+
+**Hosting**
+* Vercel (frontend)
+* Supabase (backend + DB + storage)
+
+**No:**
+* No FastAPI
+* No GraphQL
+* No Docker
+* No AWS
+* No Redis
+
+Keep it flat.
+
+### 📦 Deliverable
+* Live deployed app
+* Auth works
+* Upload works
+* Text critique works
+* Props work
+* Dashboard metrics work
+* 1 real user test
+
+### 🔄 Upgrade Trigger
+Move to Phase 2 only when:
+* MVP deployed
+* No critical bugs
+* At least 2–3 people used it
+
+### Database Schema (Persistent)
+* `users` (id, username, email, created_at)
+* `submissions` (id, user_id, image_url, exercise_type, created_at)
+* `critiques` (id, submission_id, reviewer_id, what_works, what_to_improve, next_focus, created_at)
+* `props` (id, submission_id, giver_id, created_at)
 
 ### MVP Definition of Done
-- ✅ User can sign up and log in
-- ✅ Upload one artwork with a tag
-- ✅ Other users can leave a structured critique (3 questions)
-- ✅ Critiqued artist sees total props and critique count
-- ✅ Dashboard displays total uploads, critiques given/received, current streak
-- ✅ Deployed and stable at one public URL
+* ✅ User can sign up and log in
+* ✅ Upload one artwork with a tag
+* ✅ Other users can leave a structured critique (3 questions)
+* ✅ Critiqued artist sees total props and critique count
+* ✅ Dashboard displays total uploads, critiques given/received, current streak
+* ✅ Deployed and stable at one public URL
 
 ### Performance Targets (Phase 1)
-- p95 upload latency ≤ 3s for <5MB image
-- Critique submission ≤ 1s write
-- Dashboard loads ≤ 1s from cache
-- Cost ≤ $20/month (Vercel + Supabase tier)
+* p95 upload latency ≤ 3s for <5MB image
+* Critique submission ≤ 1s write
+* Dashboard loads ≤ 1s from cache
+* Cost ≤ $20/month (Vercel + Supabase tier)
 
 ---
 
@@ -204,7 +240,6 @@ Building a full-stack platform where artists upload practice pieces, receive str
 ## Day 10: Deployment & Documentation
 - [ ] **Deployment**
   - [ ] Deploy frontend to Vercel
-  - [ ] Deploy backend to Render/Railway (if using FastAPI)
   - [ ] Set up production environment variables
   - [ ] Configure domain and SSL
   - [ ] Test production deployment thoroughly
@@ -383,14 +418,27 @@ Building a full-stack platform where artists upload practice pieces, receive str
 ---
 
 ## Future Enhancements (Beyond Phase 3)
+
+### Community & Events
+- [ ] Art Fight seasonal events
+- [ ] Drawing games (Drawception/Interference style)
+- [ ] Community challenges and competitions
+- [ ] Live streaming critique sessions
+
+### Platform Expansion
 - [ ] Mobile app (React Native)
 - [ ] Advanced gamification system
-- [ ] Mentor/student matching
-- [ ] Live streaming critique sessions
-- [ ] Community challenges and competitions
 - [ ] Integration with art learning platforms
-- [ ] Marketplace for critique services
 - [ ] Advanced analytics and insights
+
+### Deprioritized (Validate First)
+- [ ] Mentor/student matching (evaluate demand after MVP)
+- [ ] Marketplace for critique services
+
+### Related Standalone Projects
+- [ ] **Visual RAG Portfolio** - Separate tool for portfolio organization using CLIP embeddings + vector search
+  - POC recommended: 2-3 days testing CLIP + Qdrant with 100 images
+  - Can integrate into Iron Canvas if validated
 
 ---
 
@@ -424,9 +472,14 @@ Building a full-stack platform where artists upload practice pieces, receive str
 - Maintain backwards compatibility when possible
 
 ### Success Metrics by Phase
-- **Phase 1**: Ship working MVP in 10 days, < $20/month cost
-- **Phase 2**: Add services while maintaining stability, < $50/month cost
+- **Phase 1**: Ship working MVP in 10 days, ≤ $20/month cost
+  - Completion signal: First non-friend user uploads and receives critique
+- **Phase 2**: Add services while maintaining stability, ≤ $50/month cost
+  - Completion signal: FastAPI proxy handles all critique submissions
 - **Phase 3**: Scale to 1000+ users with full observability
+  - Completion signal: Scaled deployment with AI-augmented feedback
+
+> 📊 **Full metrics, review templates, and execution system in [Knowledge Base](knowledgebase/KNOWLEDGEBASE.md)**
 
 ### Risk Mitigation
 - Keep Phase 1 working while building Phase 2
