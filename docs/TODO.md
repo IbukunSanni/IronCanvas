@@ -5,7 +5,7 @@ Building a full-stack platform where artists upload practice pieces, receive str
 
 **Core Loop**: Practice → Upload → Critique → Track
 
-> 📖 **See [Knowledge Base](knowledgebase/KNOWLEDGEBASE.md)** for complete project philosophy, execution system, and learning roadmap.
+> 📖 **See [Knowledge Base](KNOWLEDGEBASE.md)** for complete project philosophy, execution system, and learning roadmap.
 
 ## Technical Roadmap & Architecture (Locked)
 
@@ -60,6 +60,7 @@ Keep it flat.
 * 1 real user test
 
 ### 🔄 Upgrade Trigger
+
 Move to Phase 2 only when:
 * MVP deployed
 * No critical bugs
@@ -91,17 +92,17 @@ Move to Phase 2 only when:
 
 ### Day 1-2: Foundation & Supabase Setup
 - [ ] **Project Setup**
-  - [ ] Initialize Next.js 14 project with App Router + TypeScript
-  - [ ] Set up Tailwind CSS
-  - [ ] Configure ESLint, Prettier, and TypeScript strict mode
-  - [ ] Install Zustand and SWR for state management
-  - [ ] Set up Git repository with conventional commit setup
-  - [ ] Create folder structure: app/, components/, lib/, types/, utils/
+  - [x] Initialize Next.js 14 project with App Router + TypeScript
+  - [x] Set up Tailwind CSS
+  - [x] Configure ESLint, Prettier, and TypeScript strict mode
+  - [x] Install SWR for data fetching
+  - [x] Set up Git repository with conventional commit setup
+  - [x] Create folder structure: app/, components/, lib/, types/, utils/
 
 - [ ] **Supabase Setup**
   - [ ] Create Supabase project
   - [ ] Configure environment variables (.env.local)
-  - [ ] Install Supabase client libraries
+  - [x] Install Supabase client libraries
   - [ ] Set up Supabase CLI for local development
   - [ ] Configure Row Level Security (RLS) policies
 
@@ -115,9 +116,9 @@ Move to Phase 2 only when:
 
 - [ ] **Authentication System (Supabase Auth)**
   - [ ] Set up Supabase Auth configuration
-  - [ ] Create auth context and hooks
-  - [ ] Implement registration form (username + email)
-  - [ ] Implement login/logout functionality
+  - [x] Create auth context and hooks
+  - [x] Implement registration form (username + email)
+  - [x] Implement login/logout functionality
   - [ ] Set up protected routes middleware
   - [ ] Create basic user profile page
   - [ ] Test auth flow end-to-end
@@ -275,215 +276,16 @@ Move to Phase 2 only when:
 
 ---
 
-## Phase 2 - Expansion (Learn Foundations)
+## Future Phases (Reference)
 
-**Goal**: Add real backend compute and structured APIs while keeping Supabase as data/auth layer
+Phase 1.5: Curriculum metadata layer (optional fields + simple filters).
 
-### Phase 2 Technical Stack Evolution
+Phase 2: Image annotation system (canvas or Konva + annotations table).
 
-| Layer          | Upgrade                                                                | Skill Learned                            |
-| -------------- | ---------------------------------------------------------------------- | ---------------------------------------- |
-| **API**        | Add **FastAPI (or Express + TypeScript)** service in front of Supabase | Routing, validation, middleware, testing |
-| **Queries**    | Try **GraphQL (pg_graphql or Apollo)** for nested reads                | Schema design, resolvers, caching        |
-| **Jobs**       | Add **Supabase Edge Functions or AWS Lambda** for streak + AI prep     | Async tasks, permissions                 |
-| **Infra**      | Dockerize backend + CI/CD pipeline                                     | DevOps, container basics                 |
-| **Monitoring** | Add **PostHog or Grafana**                                             | Metrics & logging discipline             |
+Phase 3: Compute layer (FastAPI/Express + Docker + CI/CD).
 
-**Outcome**: Move from *no-code backend* → *explicit service logic* while keeping product alive
+Phase 4: Performance & cloud hardening (AWS, Redis, observability).
 
-### Phase 2 Performance Targets
-- API response time ≤ 500ms p95
-- Cost ≤ $50/month with additional services
-- 99.9% uptime
+Phase 5: Advanced modules (events, games, realtime sessions).
 
-### Backend Service Layer
-- [ ] **FastAPI Service Setup**
-  - [ ] Create FastAPI application structure
-  - [ ] Set up Docker containerization
-  - [ ] Configure FastAPI + Supabase integration
-  - [ ] Create API routing and middleware
-  - [ ] Add request validation with Pydantic
-  - [ ] Implement proper error handling
-  - [ ] Set up API documentation (OpenAPI)
-
-- [ ] **GraphQL Integration**
-  - [ ] Set up pg_graphql or Apollo GraphQL
-  - [ ] Design GraphQL schema
-  - [ ] Create resolvers for nested queries
-  - [ ] Implement query optimization and caching
-  - [ ] Add GraphQL playground for development
-
-- [ ] **Async Jobs & Functions**
-  - [ ] Set up Supabase Edge Functions
-  - [ ] Create streak calculation jobs
-  - [ ] Implement notification system
-  - [ ] Add image processing functions
-  - [ ] Set up cron jobs for periodic tasks
-
-- [ ] **Monitoring & Analytics**
-  - [ ] Integrate PostHog for product analytics
-  - [ ] Set up application logging
-  - [ ] Add performance monitoring
-  - [ ] Create custom dashboards
-  - [ ] Implement error tracking
-
-### Infrastructure & DevOps
-- [ ] **CI/CD Pipeline**
-  - [ ] Set up GitHub Actions
-  - [ ] Create automated testing pipeline
-  - [ ] Add code quality checks
-  - [ ] Implement automated deployment
-  - [ ] Set up staging environment
-
-- [ ] **Testing Framework**
-  - [ ] Add unit tests (Vitest)
-  - [ ] Create integration tests
-  - [ ] Set up E2E testing (Cypress)
-  - [ ] Add API testing suite
-  - [ ] Implement test coverage reporting
-
----
-
-## Phase 3 - Integration & Scale (Industry Skill)
-
-**Goal**: Production-grade system with industry-standard architecture
-
-### Phase 3 Technical Stack Evolution
-
-| Domain                | Tool / Concept                       | Focus                    |
-| --------------------- | ------------------------------------ | ------------------------ |
-| **Cloud integration** | AWS S3 + RDS + Lambda + SQS          | IAM, queues, reliability |
-| **Performance**       | Caching layer (Redis / CloudFront)   | Scaling read loads       |
-| **Testing**           | Pytest / Vitest / Cypress            | Unit + E2E discipline    |
-| **AI Extension**      | Hugging Face or OpenAI API           | Auto-critique generation |
-| **Realtime**          | Supabase Realtime / WebSocket Server | Live feedback            |
-| **Observability**     | CloudWatch / Grafana                 | Ops readiness            |
-
-**Outcome**: Production-grade system and resume-ready case study
-
-### Phase 3 Performance Targets
-- Support 1000+ concurrent users
-- Cost optimization with caching
-- Full observability stack
-- 99.99% uptime
-
-### Cloud Integration
-- [ ] **AWS Services Migration**
-  - [ ] Migrate to AWS RDS (PostgreSQL)
-  - [ ] Set up S3 with CloudFront CDN
-  - [ ] Implement AWS Lambda functions
-  - [ ] Add SQS for async processing
-  - [ ] Configure IAM roles and policies
-  - [ ] Set up VPC and security groups
-
-- [ ] **Caching & Performance**
-  - [ ] Implement Redis caching layer
-  - [ ] Add CloudFront for static assets
-  - [ ] Optimize database queries
-  - [ ] Implement connection pooling
-  - [ ] Add query result caching
-  - [ ] Set up CDN for image delivery
-
-### AI & Advanced Features
-- [ ] **AI Integration**
-  - [ ] Integrate OpenAI or Hugging Face API
-  - [ ] Implement auto-critique generation
-  - [ ] Add image analysis capabilities
-  - [ ] Create AI-powered exercise suggestions
-  - [ ] Implement smart tagging system
-
-- [ ] **Real-time Features**
-  - [ ] Add WebSocket server
-  - [ ] Implement live collaboration
-  - [ ] Create real-time notifications
-  - [ ] Add live critique sessions
-  - [ ] Build real-time dashboard updates
-
-### Production Operations
-- [ ] **Observability**
-  - [ ] Set up CloudWatch monitoring
-  - [ ] Implement distributed tracing
-  - [ ] Add custom metrics collection
-  - [ ] Create alerting system
-  - [ ] Set up log aggregation
-
-- [ ] **Security & Compliance**
-  - [ ] Implement security headers
-  - [ ] Add rate limiting
-  - [ ] Set up WAF (Web Application Firewall)
-  - [ ] Add data encryption at rest
-  - [ ] Implement audit logging
-  - [ ] Conduct security audit
-
----
-
-## Future Enhancements (Beyond Phase 3)
-
-### Community & Events
-- [ ] Art Fight seasonal events
-- [ ] Drawing games (Drawception/Interference style)
-- [ ] Community challenges and competitions
-- [ ] Live streaming critique sessions
-
-### Platform Expansion
-- [ ] Mobile app (React Native)
-- [ ] Advanced gamification system
-- [ ] Integration with art learning platforms
-- [ ] Advanced analytics and insights
-
-### Deprioritized (Validate First)
-- [ ] Mentor/student matching (evaluate demand after MVP)
-- [ ] Marketplace for critique services
-
-### Related Standalone Projects
-- [ ] **Visual RAG Portfolio** - Separate tool for portfolio organization using CLIP embeddings + vector search
-  - POC recommended: 2-3 days testing CLIP + Qdrant with 100 images
-  - Can integrate into Iron Canvas if validated
-
----
-
-## Technical Debt & Improvements
-- [ ] Add comprehensive error handling
-- [ ] Implement proper logging system
-- [ ] Add unit and integration tests
-- [ ] Set up CI/CD pipeline
-- [ ] Add monitoring and analytics
-- [ ] Implement rate limiting
-- [ ] Add data backup strategy
-- [ ] Security audit and improvements
-
----
-
-## Development Philosophy & Notes
-
-### Build → Replace → Scale Approach
-- **Phase 1**: Ship fast with Supabase - learn the full product flow
-- **Phase 2**: Replace components with custom services - learn backend architecture
-- **Phase 3**: Scale with industry tools - learn production operations
-- Never learn tech abstractly—always integrate into this running system
-- Keep database schema stable across all phases
-
-### Key Principles
-- Focus on core functionality over polish initially
-- Test each feature thoroughly before moving to next phase
-- Document technical decisions and architectural trade-offs
-- Regular commits using conventional commit format
-- Track metrics at every phase: performance, cost, reliability
-- Maintain backwards compatibility when possible
-
-### Success Metrics by Phase
-- **Phase 1**: Ship working MVP in 10 days, ≤ $20/month cost
-  - Completion signal: First non-friend user uploads and receives critique
-- **Phase 2**: Add services while maintaining stability, ≤ $50/month cost
-  - Completion signal: FastAPI proxy handles all critique submissions
-- **Phase 3**: Scale to 1000+ users with full observability
-  - Completion signal: Scaled deployment with AI-augmented feedback
-
-> 📊 **Full metrics, review templates, and execution system in [Knowledge Base](knowledgebase/KNOWLEDGEBASE.md)**
-
-### Risk Mitigation
-- Keep Phase 1 working while building Phase 2
-- Feature flags for gradual rollouts
-- Database migrations with rollback plans
-- Comprehensive testing at each phase transition
-- Performance monitoring to catch regressions early
+> 📊 **Full metrics, review templates, and execution system in [Knowledge Base](KNOWLEDGEBASE.md)**
