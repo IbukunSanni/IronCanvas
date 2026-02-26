@@ -1,22 +1,63 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { uploadArtwork } from '@/lib/storage';
 import { useAuth } from '@/components/AuthProvider';
 
 const exerciseOptions = ['Boxes', 'Ellipses', 'Figures', 'Other'];
+const MAX_FILE_SIZE_MB = 5;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 export default function UploadForm() {
   const router = useRouter();
   const { user } = useAuth();
   const [exerciseType, setExerciseType] = useState(exerciseOptions[0]);
   const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [curriculumSource, setCurriculumSource] = useState('');
   const [lessonNumber, setLessonNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!file) {
+      setPreviewUrl(null);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewUrl(objectUrl);
+
+    return () => {
+      URL.revokeObjectURL(objectUrl);
+    };
+  }, [file]);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0] ?? null;
+    setError(null);
+
+    if (!selectedFile) {
+      setFile(null);
+      return;
+    }
+
+    if (!selectedFile.type.startsWith('image/')) {
+      setError('Please select a valid image file.');
+      setFile(null);
+      return;
+    }
+
+    if (selectedFile.size > MAX_FILE_SIZE_BYTES) {
+      setError(`Image must be smaller than ${MAX_FILE_SIZE_MB}MB.`);
+      setFile(null);
+      return;
+    }
+
+    setFile(selectedFile);
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -89,10 +130,24 @@ export default function UploadForm() {
           type="file"
           accept="image/*"
           required
-          onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+          onChange={handleFileChange}
           className="mt-2 w-full rounded-md border border-zinc-200 px-3 py-2 text-sm"
         />
+        <p className="mt-2 text-xs text-zinc-500">Max file size: {MAX_FILE_SIZE_MB}MB.</p>
       </label>
+
+      {previewUrl ? (
+        <div className="rounded-lg border border-dashed border-zinc-200 bg-white p-4">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-zinc-500">
+            Preview
+          </p>
+          <img
+            src={previewUrl}
+            alt="Artwork preview"
+            className="max-h-64 w-full rounded-md object-contain"
+          />
+        </div>
+      ) : null}
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="block text-sm font-medium text-zinc-700">
@@ -126,6 +181,10 @@ export default function UploadForm() {
       >
         {loading ? 'Uploading…' : 'Upload'}
       </button>
+
+      {loading ? (
+        <p className="text-center text-xs text-zinc-500">Uploading your artwork…</p>
+      ) : null}
     </form>
   );
 }

@@ -9,6 +9,7 @@ create table if not exists public.users (
   id uuid primary key references auth.users(id) on delete cascade,
   username text not null unique,
   email text not null unique,
+  avatar_url text,
   created_at timestamptz not null default now()
 );
 

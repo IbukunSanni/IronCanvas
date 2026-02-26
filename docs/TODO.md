@@ -108,6 +108,7 @@ Move to Phase 2 only when:
 
 - [ ] **Database Schema (Supabase)**
   - [ ] Create `users` table (id, username, email, created_at)
+  - [ ] Add optional `avatar_url` to users
   - [ ] Create `submissions` table (id, user_id, image_url, exercise_type, created_at)
   - [ ] Create `critiques` table (id, submission_id, reviewer_id, what_works, what_to_improve, next_focus, created_at)
   - [ ] Create `props` table (id, submission_id, giver_id, created_at)
@@ -121,6 +122,7 @@ Move to Phase 2 only when:
   - [x] Implement login/logout functionality
   - [x] Set up protected routes middleware
   - [x] Create basic user profile page
+  - [x] Allow profile photo (URL-based)
   - [ ] Test auth flow end-to-end
 
 - [ ] **Image Upload (Supabase Storage)**
@@ -128,6 +130,7 @@ Move to Phase 2 only when:
   - [ ] Configure storage policies and permissions
   - [x] Create image upload utility functions
   - [x] Implement image upload form (basic)
+  - [x] Add file validation (size/type)
   - [ ] Add image optimization and validation
   - [ ] Test upload functionality
 
@@ -137,17 +140,17 @@ Move to Phase 2 only when:
 - [ ] **Submission Form**
   - [x] Create artwork upload form component
   - [x] Add exercise type selection (Boxes, Ellipses, Figures)
-  - [ ] Implement image preview functionality
+  - [x] Implement image preview functionality
   - [x] Add form validation
   - [x] Connect to backend API
-  - [ ] Handle upload progress feedback
+  - [x] Handle upload progress feedback
 
 - [ ] **Dashboard View**
-  - [ ] Create user dashboard layout
-  - [ ] Display user's uploaded submissions
-  - [ ] Show submission thumbnails with metadata
+  - [x] Create user dashboard layout
+  - [x] Display user's uploaded submissions
+  - [x] Show submission thumbnails with metadata
   - [ ] Add submission filtering by exercise type
-  - [ ] Implement basic responsive design
+  - [x] Implement basic responsive design
 
 - [ ] **Submission Detail Page**
   - [ ] Create individual submission view
@@ -199,9 +202,9 @@ Move to Phase 2 only when:
 
 ## Day 8: Growth Dashboard
 - [ ] **Dashboard Metrics Display**
-  - [ ] Create statistics cards component
-  - [ ] Display total uploads, critiques given/received
-  - [ ] Show current streak counter
+  - [x] Create statistics cards component
+  - [x] Display total uploads, critiques given/received
+  - [x] Show current streak counter
   - [ ] Add streak definition (upload or critique within 3 days)
 
 - [ ] **Progress Visualization**
