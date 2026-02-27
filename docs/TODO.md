@@ -247,7 +247,7 @@ Move to Phase 2 only when:
   - [ ] Set SMTP_* variables in .env.local
 
 - [ ] **Performance Testing**
-  - [ ] Optional: basic smoke tests only
+  - [ ] Priority: basic smoke test (auth → upload → critique → credits)
 
 - [ ] **Documentation & Demo**
   - [ ] Update README with actual schema

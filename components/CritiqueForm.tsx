@@ -56,6 +56,7 @@ export default function CritiqueForm({ submissionId, onCreated }: CritiqueFormPr
       <div className="space-y-1">
         <h2 className="text-lg font-semibold text-zinc-900">Leave a critique</h2>
         <p className="text-sm text-zinc-500">Be specific and constructive.</p>
+        <p className="text-xs text-zinc-500">Each critique earns 1 credit.</p>
       </div>
 
       <div className="mt-4 space-y-4">
