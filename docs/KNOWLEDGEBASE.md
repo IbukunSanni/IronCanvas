@@ -497,6 +497,7 @@ A tool to track, organize, and review your Drawabox exercises. Log completed les
 **Phase 5+ (Growth) Additions:**
 - Art Fight seasonal events
 - Drawing games (Drawception/Interference style)
+- Drawception extension (if validated)
 - Community challenges
 
 **Phase 5+ (Community) Exploration:**

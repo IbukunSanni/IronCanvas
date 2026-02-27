@@ -10,11 +10,13 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
+    setSuccess(null);
     setLoading(true);
 
     const { data, error: signUpError } = await supabase.auth.signUp({
@@ -29,8 +31,9 @@ export default function RegisterPage() {
     }
 
     const userId = data.user?.id;
+    const hasSession = Boolean(data.session);
 
-    if (userId) {
+    if (userId && hasSession) {
       const { error: profileError } = await supabase.from('users').insert({
         id: userId,
         username,
@@ -45,7 +48,12 @@ export default function RegisterPage() {
     }
 
     setLoading(false);
-    router.push('/dashboard');
+    if (hasSession) {
+      router.push('/dashboard');
+      return;
+    }
+
+    setSuccess('Check your email to confirm your account, then sign in.');
   };
 
   return (
@@ -95,6 +103,7 @@ export default function RegisterPage() {
         </div>
 
         {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        {success ? <p className="text-sm text-emerald-600">{success}</p> : null}
 
         <button
           type="submit"

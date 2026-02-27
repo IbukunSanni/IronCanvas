@@ -120,6 +120,8 @@ Move to Phase 2 only when:
   - [x] Create auth context and hooks
   - [x] Implement registration form (username + email)
   - [x] Implement login/logout functionality
+  - [x] Add magic link sign-in
+  - [x] Add set-password page
   - [x] Set up protected routes middleware
   - [x] Create basic user profile page
   - [x] Allow profile photo (URL-based)
@@ -162,34 +164,34 @@ Move to Phase 2 only when:
 
 ## Day 5-6: Critique System
 - [ ] **Critique Form**
-  - [ ] Design structured critique form (3 fields)
+  - [x] Design structured critique form (3 fields)
     - What works well
     - What to improve
     - Next focus area
-  - [ ] Create critique submission API endpoint
-  - [ ] Add form validation and error handling
-  - [ ] Link critiques to submissions and reviewers
+  - [x] Create critique submission API endpoint
+  - [x] Add form validation and error handling
+  - [x] Link critiques to submissions and reviewers
 
 - [ ] **Critique Display**
-  - [ ] Show critiques on submission detail pages
-  - [ ] Display critique author and timestamp
-  - [ ] Add critique formatting and styling
+  - [x] Show critiques on submission detail pages
+  - [x] Display critique author and timestamp
+  - [x] Add critique formatting and styling
   - [ ] Implement critique pagination (if needed)
 
 - [ ] **Critique Management**
-  - [ ] Create "My Critiques" page for users
-  - [ ] Show critiques given and received
-  - [ ] Add critique editing/deletion (basic)
+  - [x] Create "My Critiques" page for users
+  - [x] Show critiques given and received
+  - [x] Add critique editing/deletion (basic)
 
 ---
 
 ## Day 7: Props & Basic Metrics
 - [ ] **Props System**
-  - [ ] Create "+1 Prop" button component
-  - [ ] Implement props API endpoints
-  - [ ] Add props counter to submissions
-  - [ ] Prevent self-propping
-  - [ ] Show props given/received in user dashboard
+  - [x] Create "+1 Prop" button component
+  - [x] Implement props API endpoints
+  - [x] Add props counter to submissions
+  - [x] Prevent self-propping
+  - [x] Show props given/received in user dashboard
 
 - [ ] **Basic Metrics Queries**
   - [ ] Create database queries for user statistics
@@ -269,6 +271,18 @@ Move to Phase 2 only when:
   - [ ] User acceptance testing
   - [ ] Fix any critical bugs
   - [ ] Prepare for launch
+
+### MVP Testing Checklist
+- [ ] Auth: sign up, login, logout, protected routes redirect
+- [ ] Auth: magic link sign-in works
+- [ ] Auth: set-password works after magic link
+- [ ] Upload: valid image uploads and renders
+- [ ] Upload: invalid file rejected (type/size)
+- [ ] Dashboard: uploads/critique counts update
+- [ ] Dashboard: filters work and empty states render
+- [ ] Submission: detail view loads and shows metadata
+- [ ] Critiques: create and view critiques
+- [ ] Storage: uploaded image persists after refresh
 
 ---
 

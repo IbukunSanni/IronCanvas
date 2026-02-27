@@ -8,9 +8,29 @@ import DashboardShell from '@/components/DashboardShell';
 import EmptyState from '@/components/EmptyState';
 import type { Submission } from '@/types/submission';
 import { supabase } from '@/lib/supabaseClient';
+import type { Critique } from '@/types/critique';
+import CritiqueForm from '@/components/CritiqueForm';
+import CritiqueList from '@/components/CritiqueList';
+import PropsButton from '@/components/PropsButton';
 
 type SubmissionDetail = Submission & {
   user_id: string;
+};
+
+const fetchCritiques = async (submissionId: string) => {
+  const { data, error } = await supabase
+    .from('critiques')
+    .select(
+      'id, submission_id, reviewer_id, what_works, what_to_improve, next_focus, created_at, reviewer:users(username, avatar_url)',
+    )
+    .eq('submission_id', submissionId)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return (data ?? []) as Critique[];
 };
 
 const fetchSubmission = async (id: string) => {
@@ -41,6 +61,19 @@ export default function SubmissionDetailPage({ params }: { params: { id: string 
     user ? fetchSubmission(params.id) : Promise.resolve(null),
   );
 
+  const {
+    data: critiques,
+    error: critiquesError,
+    mutate: refreshCritiques,
+  } = useSWR(user ? ['critiques', params.id] : null, () =>
+    user ? fetchCritiques(params.id) : Promise.resolve([]),
+  );
+
+  const handleDelete = async (critiqueId: string) => {
+    await supabase.from('critiques').delete().eq('id', critiqueId);
+    refreshCritiques();
+  };
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-zinc-50">
@@ -53,7 +86,7 @@ export default function SubmissionDetailPage({ params }: { params: { id: string 
     return null;
   }
 
-  if (error) {
+  if (error || critiquesError) {
     return (
       <DashboardShell title="Submission" subtitle="Unable to load submission.">
         <EmptyState
@@ -114,11 +147,16 @@ export default function SubmissionDetailPage({ params }: { params: { id: string 
                 {data.lesson_number ? ` · Lesson ${data.lesson_number}` : ''}
               </p>
             ) : null}
+            <div className="mt-4">
+              <PropsButton submissionId={data.id} userId={user.id} />
+            </div>
           </div>
-
-          <div className="rounded-lg border border-dashed border-zinc-200 bg-white p-4 text-sm text-zinc-500">
-            Critiques will display here next.
-          </div>
+          <CritiqueForm submissionId={data.id} onCreated={() => refreshCritiques()} />
+          <CritiqueList
+            critiques={critiques ?? []}
+            currentUserId={user.id}
+            onDelete={handleDelete}
+          />
         </div>
       </div>
     </DashboardShell>

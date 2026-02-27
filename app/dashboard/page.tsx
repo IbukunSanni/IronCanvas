@@ -16,6 +16,8 @@ type DashboardData = {
   uploads: number;
   critiquesGiven: number;
   critiquesReceived: number;
+  propsGiven: number;
+  propsReceived: number;
 };
 
 const fetchDashboard = async (userId: string): Promise<DashboardData> => {
@@ -25,11 +27,17 @@ const fetchDashboard = async (userId: string): Promise<DashboardData> => {
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
 
-  const [{ data: submissions, error: submissionsError }, { count: uploads }, { count: given }] =
+  const [
+    { data: submissions, error: submissionsError },
+    { count: uploads },
+    { count: given },
+    { count: propsGiven },
+  ] =
     await Promise.all([
       submissionsQuery,
       supabase.from('submissions').select('*', { count: 'exact', head: true }).eq('user_id', userId),
       supabase.from('critiques').select('*', { count: 'exact', head: true }).eq('reviewer_id', userId),
+      supabase.from('props').select('*', { count: 'exact', head: true }).eq('giver_id', userId),
     ]);
 
   if (submissionsError) {
@@ -37,20 +45,28 @@ const fetchDashboard = async (userId: string): Promise<DashboardData> => {
   }
 
   const submissionIds = (submissions ?? []).map((submission) => submission.id);
-  const critiquesReceived = submissionIds.length
-    ? (
-        await supabase
+  const [critiquesReceived, propsReceived] = submissionIds.length
+    ? await Promise.all([
+        supabase
           .from('critiques')
           .select('*', { count: 'exact', head: true })
           .in('submission_id', submissionIds)
-      ).count ?? 0
-    : 0;
+          .then((result) => result.count ?? 0),
+        supabase
+          .from('props')
+          .select('*', { count: 'exact', head: true })
+          .in('submission_id', submissionIds)
+          .then((result) => result.count ?? 0),
+      ])
+    : [0, 0];
 
   return {
     submissions: submissions ?? [],
     uploads: uploads ?? 0,
     critiquesGiven: given ?? 0,
     critiquesReceived,
+    propsGiven: propsGiven ?? 0,
+    propsReceived,
   };
 };
 
@@ -117,12 +133,20 @@ export default function DashboardPage() {
       title="Dashboard"
       subtitle={`Signed in as ${user.email ?? 'unknown'}`}
       actions={
-        <button
-          onClick={() => signOut()}
-          className="rounded-md border border-zinc-200 px-4 py-2 text-sm font-semibold"
-        >
-          Sign out
-        </button>
+        <div className="flex items-center gap-2">
+          <a
+            href="/critiques"
+            className="rounded-md border border-zinc-200 px-4 py-2 text-sm font-semibold"
+          >
+            My critiques
+          </a>
+          <button
+            onClick={() => signOut()}
+            className="rounded-md border border-zinc-200 px-4 py-2 text-sm font-semibold"
+          >
+            Sign out
+          </button>
+        </div>
       }
     >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -134,6 +158,11 @@ export default function DashboardPage() {
         <StatCard label="Critiques given" value={`${data?.critiquesGiven ?? 0}`} />
         <StatCard label="Critiques received" value={`${data?.critiquesReceived ?? 0}`} />
         <StatCard label="Current streak" value="0 days" helper="Streaks land next." />
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <StatCard label="Props given" value={`${data?.propsGiven ?? 0}`} />
+        <StatCard label="Props received" value={`${data?.propsReceived ?? 0}`} />
       </div>
 
       {data?.submissions && data.submissions.length > 0 ? (
