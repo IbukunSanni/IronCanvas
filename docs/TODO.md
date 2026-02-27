@@ -55,8 +55,10 @@ Keep it flat.
 * Auth works
 * Upload works
 * Text critique works
+* Queue of posts needing critique
+* Critique credit system
 * Props work
-* Dashboard metrics work
+* Dashboard metrics work (posts, critiques given/received)
 * 1 real user test
 
 ### 🔄 Upgrade Trigger
@@ -77,14 +79,13 @@ Move to Phase 2 only when:
 * ✅ Upload one artwork with a tag
 * ✅ Other users can leave a structured critique (3 questions)
 * ✅ Critiqued artist sees total props and critique count
-* ✅ Dashboard displays total uploads, critiques given/received, current streak
+* ✅ Queue of posts needing critique
+* ✅ Critique credit system
+* ✅ Dashboard displays total posts, critiques given/received, credits
 * ✅ Deployed and stable at one public URL
 
 ### Performance Targets (Phase 1)
-* p95 upload latency ≤ 3s for <5MB image
-* Critique submission ≤ 1s write
-* Dashboard loads ≤ 1s from cache
-* Cost ≤ $20/month (Vercel + Supabase tier)
+* Keep it functional and stable
 
 ---
 
@@ -194,26 +195,21 @@ Move to Phase 2 only when:
   - [x] Show props given/received in user dashboard
 
 - [ ] **Basic Metrics Queries**
-  - [ ] Create database queries for user statistics
-  - [ ] Count total uploads per user
-  - [ ] Count critiques given and received
-  - [ ] Calculate current streak logic
-  - [ ] Optimize queries for dashboard performance
+  - [x] Create database queries for user statistics
+  - [x] Count total posts per user
+  - [x] Count critiques given and received
+  - [x] Calculate critique credits
 
 ---
 
 ## Day 8: Growth Dashboard
 - [ ] **Dashboard Metrics Display**
   - [x] Create statistics cards component
-  - [x] Display total uploads, critiques given/received
-  - [x] Show current streak counter
-  - [ ] Add streak definition (upload or critique within 3 days)
+  - [x] Display total posts, critiques given/received
+  - [x] Display critique credits
 
 - [ ] **Progress Visualization**
-  - [ ] Implement simple bar chart (uploads vs critiques)
-  - [ ] Add chart library (Chart.js or similar lightweight option)
-  - [ ] Create responsive chart component
-  - [ ] Show progress over time (weekly/monthly view)
+  - [ ] Optional: simple bar chart (posts vs critiques)
 
 - [ ] **Dashboard Polish**
   - [ ] Improve dashboard layout and spacing
@@ -236,10 +232,7 @@ Move to Phase 2 only when:
   - [ ] Fix any layout breaking issues
 
 - [ ] **Performance Optimization**
-  - [ ] Optimize image loading (lazy loading, compression)
-  - [ ] Add loading spinners and skeleton screens
-  - [ ] Minimize bundle size
-  - [ ] Test and optimize database queries
+  - [ ] Optional: optimize image loading if needed
 
 ---
 
@@ -254,10 +247,7 @@ Move to Phase 2 only when:
   - [ ] Set SMTP_* variables in .env.local
 
 - [ ] **Performance Testing**
-  - [ ] Test p95 upload latency (target: ≤3s for <5MB)
-  - [ ] Test critique submission speed (target: ≤1s)
-  - [ ] Test dashboard load time (target: ≤1s from cache)
-  - [ ] Monitor costs (target: ≤$20/month)
+  - [ ] Optional: basic smoke tests only
 
 - [ ] **Documentation & Demo**
   - [ ] Update README with actual schema

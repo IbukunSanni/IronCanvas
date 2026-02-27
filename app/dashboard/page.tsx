@@ -18,6 +18,7 @@ type DashboardData = {
   critiquesReceived: number;
   propsGiven: number;
   propsReceived: number;
+  creditsAvailable: number;
 };
 
 const fetchDashboard = async (userId: string): Promise<DashboardData> => {
@@ -67,6 +68,7 @@ const fetchDashboard = async (userId: string): Promise<DashboardData> => {
     critiquesReceived,
     propsGiven: propsGiven ?? 0,
     propsReceived,
+    creditsAvailable: Math.max(0, (given ?? 0) - (uploads ?? 0)),
   };
 };
 
@@ -135,6 +137,12 @@ export default function DashboardPage() {
       actions={
         <div className="flex items-center gap-2">
           <a
+            href="/queue"
+            className="rounded-md border border-zinc-200 px-4 py-2 text-sm font-semibold"
+          >
+            Critique queue
+          </a>
+          <a
             href="/critiques"
             className="rounded-md border border-zinc-200 px-4 py-2 text-sm font-semibold"
           >
@@ -157,7 +165,11 @@ export default function DashboardPage() {
         />
         <StatCard label="Critiques given" value={`${data?.critiquesGiven ?? 0}`} />
         <StatCard label="Critiques received" value={`${data?.critiquesReceived ?? 0}`} />
-        <StatCard label="Current streak" value="0 days" helper="Streaks land next." />
+        <StatCard
+          label="Critique credits"
+          value={`${data?.creditsAvailable ?? 0}`}
+          helper="Earn by critiquing, spend on uploads."
+        />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">

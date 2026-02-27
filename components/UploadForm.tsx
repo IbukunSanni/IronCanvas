@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import useSWR from 'swr';
 import { supabase } from '@/lib/supabaseClient';
 import { uploadArtwork } from '@/lib/storage';
 import { useAuth } from '@/components/AuthProvider';
@@ -9,6 +10,23 @@ import { useAuth } from '@/components/AuthProvider';
 const exerciseOptions = ['Boxes', 'Ellipses', 'Figures', 'Other'];
 const MAX_FILE_SIZE_MB = 5;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+type CreditData = {
+  uploads: number;
+  critiquesGiven: number;
+};
+
+const fetchCredits = async (userId: string): Promise<CreditData> => {
+  const [{ count: uploads }, { count: critiquesGiven }] = await Promise.all([
+    supabase.from('submissions').select('*', { count: 'exact', head: true }).eq('user_id', userId),
+    supabase.from('critiques').select('*', { count: 'exact', head: true }).eq('reviewer_id', userId),
+  ]);
+
+  return {
+    uploads: uploads ?? 0,
+    critiquesGiven: critiquesGiven ?? 0,
+  };
+};
 
 export default function UploadForm() {
   const router = useRouter();
@@ -20,6 +38,20 @@ export default function UploadForm() {
   const [lessonNumber, setLessonNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const { data: creditData, isLoading: creditsLoading } = useSWR(
+    user ? ['credits', user.id] : null,
+    () => (user ? fetchCredits(user.id) : Promise.resolve(null)),
+  );
+
+  const creditsAvailable = useMemo(() => {
+    const critiquesGiven = creditData?.critiquesGiven ?? 0;
+    const uploads = creditData?.uploads ?? 0;
+    return Math.max(0, critiquesGiven - uploads);
+  }, [creditData]);
+
+  const hasFreeUpload = (creditData?.uploads ?? 0) === 0;
+  const canUpload = hasFreeUpload || creditsAvailable > 0;
 
   useEffect(() => {
     if (!file) {
@@ -70,6 +102,16 @@ export default function UploadForm() {
 
     if (!file) {
       setError('Select an image to upload.');
+      return;
+    }
+
+    if (creditsLoading) {
+      setError('Loading your critique credits. Try again in a moment.');
+      return;
+    }
+
+    if (!canUpload) {
+      setError('Earn a critique credit before uploading again.');
       return;
     }
 
@@ -172,11 +214,23 @@ export default function UploadForm() {
         </label>
       </div>
 
+      <div className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-700">
+        <p className="font-semibold">Critique credits</p>
+        <p className="mt-1 text-xs text-zinc-600">
+          {creditsLoading
+            ? 'Loading credits…'
+            : `Available: ${creditsAvailable}${hasFreeUpload ? ' (first upload is free)' : ''}`}
+        </p>
+        <p className="mt-1 text-xs text-zinc-500">
+          Each critique you give earns 1 credit. Uploads cost 1 credit after your first post.
+        </p>
+      </div>
+
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
 
       <button
         type="submit"
-        disabled={loading}
+        disabled={loading || creditsLoading || !canUpload}
         className="w-full rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
       >
         {loading ? 'Uploading…' : 'Upload'}
