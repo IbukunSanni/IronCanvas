@@ -16,19 +16,19 @@ export default function Home() {
 
         <div className="flex flex-wrap gap-3">
           <a
-            className="rounded-md bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white"
+            className="rounded-md bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
             href="/register"
           >
             Create account
           </a>
           <a
-            className="rounded-md border border-zinc-200 px-5 py-2.5 text-sm font-semibold text-zinc-800"
+            className="rounded-md border border-zinc-200 px-5 py-2.5 text-sm font-semibold text-zinc-800 transition-colors hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
             href="/login"
           >
             Sign in
           </a>
           <a
-            className="rounded-md border border-zinc-200 px-5 py-2.5 text-sm font-semibold text-zinc-800"
+            className="rounded-md border border-zinc-200 px-5 py-2.5 text-sm font-semibold text-zinc-800 transition-colors hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
             href="/dashboard"
           >
             View dashboard

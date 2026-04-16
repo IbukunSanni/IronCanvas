@@ -181,7 +181,7 @@ export default function ProfilePage() {
           <button
             type="submit"
             disabled={saving}
-            className="mt-4 rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+            className="mt-4 rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 disabled:opacity-60"
           >
             {saving ? 'Saving…' : 'Save profile'}
           </button>

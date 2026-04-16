@@ -14,7 +14,8 @@ export default function SubmissionCard({ submission }: { submission: Submission 
   return (
     <Link
       href={`/submissions/${submission.id}`}
-      className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm transition hover:border-zinc-300"
+      aria-label={`View ${submission.exercise_type} submission from ${formatDate(submission.created_at)}`}
+      className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm transition-all hover:border-zinc-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img

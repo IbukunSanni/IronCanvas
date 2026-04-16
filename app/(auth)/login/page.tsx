@@ -65,7 +65,7 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="mt-2 w-full rounded-md border border-zinc-200 px-3 py-2 text-sm"
+              className="mt-2 w-full rounded-md border border-zinc-200 px-3 py-2 text-sm transition-colors focus:border-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2"
             />
           </label>
 
@@ -77,7 +77,7 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="mt-2 w-full rounded-md border border-zinc-200 px-3 py-2 text-sm"
+                className="mt-2 w-full rounded-md border border-zinc-200 px-3 py-2 text-sm transition-colors focus:border-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2"
               />
             </label>
           ) : null}
@@ -99,21 +99,21 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+          className="w-full rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 disabled:opacity-60"
         >
           {loading ? 'Signing in…' : useMagicLink ? 'Send magic link' : 'Sign in'}
         </button>
 
         <p className="text-center text-sm text-zinc-500">
           No account?{' '}
-          <a className="font-semibold text-zinc-900" href="/register">
+          <a className="font-semibold text-zinc-900 underline-offset-2 hover:underline" href="/register">
             Create one
           </a>
         </p>
 
         <p className="text-center text-sm text-zinc-500">
           Need a password?{' '}
-          <a className="font-semibold text-zinc-900" href="/set-password">
+          <a className="font-semibold text-zinc-900 underline-offset-2 hover:underline" href="/set-password">
             Set one
           </a>
         </p>

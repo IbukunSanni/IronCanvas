@@ -92,7 +92,7 @@ Move to Phase 2 only when:
 ## Phase 1 - MVP Implementation (Days 1-10)
 
 ### Day 1-2: Foundation & Supabase Setup
-- [ ] **Project Setup**
+- [x] **Project Setup**
   - [x] Initialize Next.js 14 project with App Router + TypeScript
   - [x] Set up Tailwind CSS
   - [x] Configure ESLint, Prettier, and TypeScript strict mode
@@ -100,24 +100,24 @@ Move to Phase 2 only when:
   - [x] Set up Git repository with conventional commit setup
   - [x] Create folder structure: app/, components/, lib/, types/, utils/
 
-- [ ] **Supabase Setup**
-  - [ ] Create Supabase project
-  - [ ] Configure environment variables (.env.local)
+- [x] **Supabase Setup**
+  - [x] Create Supabase project
+  - [x] Configure environment variables (.env.local)
   - [x] Install Supabase client libraries
-  - [ ] Set up Supabase CLI for local development
-  - [ ] Configure Row Level Security (RLS) policies
+  - [x] Set up Supabase CLI for local development
+  - [x] Configure Row Level Security (RLS) policies
 
-- [ ] **Database Schema (Supabase)**
-  - [ ] Create `users` table (id, username, email, created_at)
-  - [ ] Add optional `avatar_url` to users
-  - [ ] Create `submissions` table (id, user_id, image_url, exercise_type, created_at)
-  - [ ] Create `critiques` table (id, submission_id, reviewer_id, what_works, what_to_improve, next_focus, created_at)
-  - [ ] Create `props` table (id, submission_id, giver_id, created_at)
-  - [ ] Set up database indexes for performance
-  - [ ] Configure RLS policies for each table
+- [x] **Database Schema (Supabase)**
+  - [x] Create `users` table (id, username, email, created_at)
+  - [x] Add optional `avatar_url` to users
+  - [x] Create `submissions` table (id, user_id, image_url, exercise_type, created_at)
+  - [x] Create `critiques` table (id, submission_id, reviewer_id, what_works, what_to_improve, next_focus, created_at)
+  - [x] Create `props` table (id, submission_id, giver_id, created_at)
+  - [x] Set up database indexes for performance
+  - [x] Configure RLS policies for each table
 
-- [ ] **Authentication System (Supabase Auth)**
-  - [ ] Set up Supabase Auth configuration
+- [x] **Authentication System (Supabase Auth)**
+  - [x] Set up Supabase Auth configuration
   - [x] Create auth context and hooks
   - [x] Implement registration form (username + email)
   - [x] Implement login/logout functionality
@@ -219,17 +219,17 @@ Move to Phase 2 only when:
 ---
 
 ## Day 9: Styling & Responsive Design
-- [ ] **UI/UX Polish**
-  - [ ] Consistent color scheme and typography
-  - [ ] Improve button and form styling
-  - [ ] Add hover states and transitions
-  - [ ] Ensure accessibility (ARIA labels, keyboard navigation)
+- [x] **UI/UX Polish**
+  - [x] Consistent color scheme and typography
+  - [x] Improve button and form styling
+  - [x] Add hover states and transitions
+  - [x] Ensure accessibility (ARIA labels, keyboard navigation)
 
-- [ ] **Responsive Layout**
-  - [ ] Mobile-first responsive design
-  - [ ] Test on mobile, tablet, and desktop
-  - [ ] Optimize image display for different screen sizes
-  - [ ] Fix any layout breaking issues
+- [x] **Responsive Layout**
+  - [x] Mobile-first responsive design
+  - [x] Test on mobile, tablet, and desktop
+  - [x] Optimize image display for different screen sizes
+  - [x] Fix any layout breaking issues
 
 - [ ] **Performance Optimization**
   - [ ] Optional: optimize image loading if needed
@@ -244,7 +244,7 @@ Move to Phase 2 only when:
   - [ ] Test production deployment thoroughly
 
 - [ ] **Email (Mailtrap)**
-  - [ ] Set SMTP_* variables in .env.local
+  - [x] Set SMTP_* variables in .env.local
 
 - [ ] **Performance Testing**
   - [ ] Priority: basic smoke test (auth → upload → critique → credits)

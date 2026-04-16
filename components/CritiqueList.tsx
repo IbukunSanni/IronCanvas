@@ -62,7 +62,8 @@ export default function CritiqueList({
                 <button
                   type="button"
                   onClick={() => onDelete(critique.id)}
-                  className="text-xs font-semibold text-zinc-500 hover:text-zinc-900"
+                  aria-label="Delete critique"
+                  className="text-xs font-semibold text-zinc-500 transition-colors hover:text-red-600"
                 >
                   Delete
                 </button>

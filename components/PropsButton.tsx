@@ -59,10 +59,12 @@ export default function PropsButton({ submissionId, userId }: PropsButtonProps) 
       type="button"
       onClick={handleToggle}
       disabled={isLoading}
-      className={`inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-semibold ${
+      aria-label={data?.hasPropped ? 'Remove prop' : 'Give a prop'}
+      aria-pressed={data?.hasPropped}
+      className={`inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 ${
         data?.hasPropped
-          ? 'border-zinc-900 bg-zinc-900 text-white'
-          : 'border-zinc-200 text-zinc-700'
+          ? 'border-zinc-900 bg-zinc-900 text-white hover:bg-zinc-800'
+          : 'border-zinc-200 text-zinc-700 hover:border-zinc-300 hover:bg-zinc-50'
       }`}
     >
       <span>+1 Prop</span>

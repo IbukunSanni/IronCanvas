@@ -115,7 +115,8 @@ export default function SubmissionDetailPage({ params }: { params: { id: string 
       actions={
         <a
           href="/dashboard"
-          className="rounded-md border border-zinc-200 px-4 py-2 text-sm font-semibold"
+          className="rounded-md border border-zinc-200 px-4 py-2 text-sm font-semibold transition-colors hover:border-zinc-300 hover:bg-zinc-50"
+          aria-label="Back to dashboard"
         >
           Back
         </a>
