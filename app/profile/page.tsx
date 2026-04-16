@@ -17,6 +17,7 @@ export default function ProfilePage() {
   const { user, loading, signOut } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [avatarUrl, setAvatarUrl] = useState('');
+  const [username, setUsername] = useState('');
   const [profileLoading, setProfileLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -47,6 +48,7 @@ export default function ProfilePage() {
 
       setProfile(data);
       setAvatarUrl(data.avatar_url ?? '');
+      setUsername(data.username ?? '');
       setProfileLoading(false);
     };
 
@@ -60,9 +62,16 @@ export default function ProfilePage() {
     setSaving(true);
     setError(null);
 
+    const trimmedUsername = username.trim();
+    if (!trimmedUsername) {
+      setError('Username cannot be empty.');
+      setSaving(false);
+      return;
+    }
+
     const { error: updateError } = await supabase
       .from('users')
-      .update({ avatar_url: avatarUrl || null })
+      .update({ avatar_url: avatarUrl || null, username: trimmedUsername })
       .eq('id', user.id);
 
     if (updateError) {
@@ -71,7 +80,7 @@ export default function ProfilePage() {
       return;
     }
 
-    setProfile((prev) => (prev ? { ...prev, avatar_url: avatarUrl || null } : prev));
+    setProfile((prev) => (prev ? { ...prev, avatar_url: avatarUrl || null, username: trimmedUsername } : prev));
     setSaving(false);
   };
 
@@ -140,9 +149,21 @@ export default function ProfilePage() {
           className="rounded-lg border border-zinc-200 bg-white p-6 text-sm text-zinc-600"
         >
           <div className="space-y-2">
-            <h2 className="text-sm font-semibold text-zinc-900">Profile photo</h2>
-            <p className="text-xs text-zinc-500">Paste an image URL for now.</p>
+            <h2 className="text-sm font-semibold text-zinc-900">Edit profile</h2>
+            <p className="text-xs text-zinc-500">Update your username and profile photo.</p>
           </div>
+
+          <label className="mt-4 block text-sm font-medium text-zinc-700">
+            Username
+            <input
+              type="text"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              placeholder="Your username"
+              className="mt-2 w-full rounded-md border border-zinc-200 px-3 py-2 text-sm"
+              required
+            />
+          </label>
 
           <label className="mt-4 block text-sm font-medium text-zinc-700">
             Avatar URL
@@ -162,7 +183,7 @@ export default function ProfilePage() {
             disabled={saving}
             className="mt-4 rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
           >
-            {saving ? 'Saving…' : 'Save photo'}
+            {saving ? 'Saving…' : 'Save profile'}
           </button>
         </form>
       </div>

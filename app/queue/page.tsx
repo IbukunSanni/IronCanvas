@@ -30,7 +30,7 @@ const getCritiqueCount = (row: QueueRow) => {
 const fetchQueue = async (userId: string): Promise<QueueData> => {
   const { data, error } = await supabase
     .from('submissions')
-    .select('id, image_url, exercise_type, created_at, curriculum_source, lesson_number, critiques(count)')
+    .select('id, user_id, image_url, exercise_type, created_at, curriculum_source, lesson_number, critiques(count)')
     .neq('user_id', userId)
     .order('created_at', { ascending: true });
 
@@ -42,6 +42,7 @@ const fetchQueue = async (userId: string): Promise<QueueData> => {
     .filter((row) => getCritiqueCount(row as QueueRow) === 0)
     .map((row) => ({
       id: row.id,
+      user_id: row.user_id,
       image_url: row.image_url,
       exercise_type: row.exercise_type,
       created_at: row.created_at,

@@ -24,7 +24,7 @@ type DashboardData = {
 const fetchDashboard = async (userId: string): Promise<DashboardData> => {
   const submissionsQuery = supabase
     .from('submissions')
-    .select('id, image_url, exercise_type, created_at, curriculum_source, lesson_number')
+    .select('id, user_id, image_url, exercise_type, created_at, curriculum_source, lesson_number')
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
 
@@ -137,6 +137,12 @@ export default function DashboardPage() {
       actions={
         <div className="flex items-center gap-2">
           <a
+            href="/submit"
+            className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white"
+          >
+            Upload
+          </a>
+          <a
             href="/queue"
             className="rounded-md border border-zinc-200 px-4 py-2 text-sm font-semibold"
           >
@@ -147,6 +153,12 @@ export default function DashboardPage() {
             className="rounded-md border border-zinc-200 px-4 py-2 text-sm font-semibold"
           >
             My critiques
+          </a>
+          <a
+            href="/profile"
+            className="rounded-md border border-zinc-200 px-4 py-2 text-sm font-semibold"
+          >
+            Profile
           </a>
           <button
             onClick={() => signOut()}
@@ -160,21 +172,21 @@ export default function DashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           label="Uploads"
-          value={`${data?.uploads ?? 0}`}
-          helper={data?.uploads ? undefined : 'Start by adding a submission.'}
+          value={data ? `${data.uploads}` : '–'}
+          helper={data && !data.uploads ? 'Start by adding a submission.' : undefined}
         />
-        <StatCard label="Critiques given" value={`${data?.critiquesGiven ?? 0}`} />
-        <StatCard label="Critiques received" value={`${data?.critiquesReceived ?? 0}`} />
+        <StatCard label="Critiques given" value={data ? `${data.critiquesGiven}` : '–'} />
+        <StatCard label="Critiques received" value={data ? `${data.critiquesReceived}` : '–'} />
         <StatCard
           label="Critique credits"
-          value={`${data?.creditsAvailable ?? 0}`}
+          value={data ? `${data.creditsAvailable}` : '–'}
           helper="Earn by critiquing, spend on uploads."
         />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <StatCard label="Props given" value={`${data?.propsGiven ?? 0}`} />
-        <StatCard label="Props received" value={`${data?.propsReceived ?? 0}`} />
+        <StatCard label="Props given" value={data ? `${data.propsGiven}` : '–'} />
+        <StatCard label="Props received" value={data ? `${data.propsReceived}` : '–'} />
       </div>
 
       {data?.submissions && data.submissions.length > 0 ? (

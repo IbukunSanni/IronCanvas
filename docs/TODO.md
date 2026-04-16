@@ -212,9 +212,9 @@ Move to Phase 2 only when:
   - [ ] Optional: simple bar chart (posts vs critiques)
 
 - [ ] **Dashboard Polish**
-  - [ ] Improve dashboard layout and spacing
-  - [ ] Add loading states for metrics
-  - [ ] Handle empty states gracefully
+  - [x] Improve dashboard layout and spacing
+  - [x] Add loading states for metrics
+  - [x] Handle empty states gracefully
 
 ---
 

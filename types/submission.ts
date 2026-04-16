@@ -1,5 +1,6 @@
 export type Submission = {
   id: string;
+  user_id: string;
   image_url: string;
   exercise_type: string;
   created_at: string;

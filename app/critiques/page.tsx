@@ -52,9 +52,15 @@ const fetchCritiques = async (userId: string): Promise<CritiqueOverview> => {
     throw receivedError;
   }
 
+  const normalize = (rows: typeof given) =>
+    (rows ?? []).map((row) => ({
+      ...row,
+      reviewer: Array.isArray(row.reviewer) ? row.reviewer[0] ?? null : row.reviewer ?? null,
+    })) as Critique[];
+
   return {
-    given: (given ?? []) as Critique[],
-    received: (received ?? []) as Critique[],
+    given: normalize(given),
+    received: normalize(received),
   };
 };
 

@@ -13,10 +13,6 @@ import CritiqueForm from '@/components/CritiqueForm';
 import CritiqueList from '@/components/CritiqueList';
 import PropsButton from '@/components/PropsButton';
 
-type SubmissionDetail = Submission & {
-  user_id: string;
-};
-
 const fetchCritiques = async (submissionId: string) => {
   const { data, error } = await supabase
     .from('critiques')
@@ -30,7 +26,10 @@ const fetchCritiques = async (submissionId: string) => {
     throw error;
   }
 
-  return (data ?? []) as Critique[];
+  return (data ?? []).map((row) => ({
+    ...row,
+    reviewer: Array.isArray(row.reviewer) ? row.reviewer[0] ?? null : row.reviewer ?? null,
+  })) as Critique[];
 };
 
 const fetchSubmission = async (id: string) => {
@@ -44,7 +43,7 @@ const fetchSubmission = async (id: string) => {
     throw error;
   }
 
-  return data as SubmissionDetail;
+  return data as Submission;
 };
 
 export default function SubmissionDetailPage({ params }: { params: { id: string } }) {
