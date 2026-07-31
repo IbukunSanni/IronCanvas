@@ -1,23 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const protectedPaths = ['/dashboard', '/profile', '/submit', '/critiques', '/queue'];
-
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  if (!protectedPaths.some((path) => pathname.startsWith(path))) {
-    return NextResponse.next();
-  }
-
-  const hasSession = request.cookies.get('sb-access-token') || request.cookies.get('sb-session');
-
-  if (!hasSession) {
-    const loginUrl = request.nextUrl.clone();
-    loginUrl.pathname = '/login';
-    return NextResponse.redirect(loginUrl);
-  }
-
+// Auth protection is handled client-side via useAuth() in each protected page.
+// Middleware cannot access Supabase sessions stored in localStorage.
+// This middleware is kept as a placeholder for future cookie-based auth (@supabase/ssr).
+export function middleware(_request: NextRequest) {
   return NextResponse.next();
 }
 

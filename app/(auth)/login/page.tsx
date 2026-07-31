@@ -34,7 +34,11 @@ export default function LoginPage() {
     setLoading(false);
 
     if (signInError) {
-      setError(signInError.message);
+      if (signInError.message.toLowerCase().includes('email not confirmed')) {
+        setError('Your email is not confirmed yet. Please check your inbox and click the confirmation link.');
+      } else {
+        setError(signInError.message);
+      }
       return;
     }
 

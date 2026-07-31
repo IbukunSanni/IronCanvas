@@ -38,10 +38,31 @@ export default function ProfilePage() {
         .from('users')
         .select('id, username, email, avatar_url')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       if (fetchError) {
         setError(fetchError.message);
+        setProfileLoading(false);
+        return;
+      }
+
+      if (!data) {
+        // Profile row missing — create it
+        const { data: newProfile, error: insertError } = await supabase
+          .from('users')
+          .upsert({ id: user.id, email: user.email ?? '', username: user.email?.split('@')[0] ?? '' }, { onConflict: 'id' })
+          .select('id, username, email, avatar_url')
+          .single();
+
+        if (insertError) {
+          setError(insertError.message);
+          setProfileLoading(false);
+          return;
+        }
+
+        setProfile(newProfile);
+        setAvatarUrl(newProfile.avatar_url ?? '');
+        setUsername(newProfile.username ?? '');
         setProfileLoading(false);
         return;
       }

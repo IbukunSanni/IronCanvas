@@ -245,6 +245,13 @@ Move to Phase 2 only when:
 
 - [ ] **Email (Mailtrap)**
   - [x] Set SMTP_* variables in .env.local
+  - [x] Update email templates via Management API (Iron Canvas branding)
+  - [ ] Enable custom SMTP in Supabase Dashboard (point to Mailtrap)
+  - [ ] Test confirmation email (register → Mailtrap inbox)
+  - [ ] Test magic link email (login → Mailtrap inbox)
+  - [ ] Test password reset email
+  - [ ] Verify email links redirect correctly to app
+  - [ ] (Production) Switch SMTP from Mailtrap sandbox to Resend or Mailtrap sending domain
 
 - [ ] **Performance Testing**
   - [ ] Priority: basic smoke test (auth → upload → critique → credits)

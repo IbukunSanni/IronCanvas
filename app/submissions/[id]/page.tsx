@@ -37,10 +37,14 @@ const fetchSubmission = async (id: string) => {
     .from('submissions')
     .select('id, user_id, image_url, exercise_type, created_at, curriculum_source, lesson_number')
     .eq('id', id)
-    .single();
+    .maybeSingle();
 
   if (error) {
     throw error;
+  }
+
+  if (!data) {
+    throw new Error('Submission not found');
   }
 
   return data as Submission;

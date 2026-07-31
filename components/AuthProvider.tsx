@@ -28,9 +28,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, newSession) => {
+    } = supabase.auth.onAuthStateChange(async (event, newSession) => {
       setSession(newSession ?? null);
       setLoading(false);
+
+      // Ensure public.users row exists after email confirmation + login
+      if (event === 'SIGNED_IN' && newSession?.user) {
+        const { id, email } = newSession.user;
+        await supabase.from('users').upsert(
+          { id, email: email ?? '', username: email?.split('@')[0] ?? '' },
+          { onConflict: 'id' },
+        );
+      }
     });
 
     return () => {

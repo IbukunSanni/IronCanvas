@@ -53,7 +53,7 @@ export default function RegisterPage() {
       return;
     }
 
-    setSuccess('Check your email to confirm your account, then sign in.');
+    setSuccess('Check your email to confirm your account. Already registered? Try signing in instead.');
   };
 
   return (
